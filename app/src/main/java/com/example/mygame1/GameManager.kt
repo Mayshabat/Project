@@ -3,7 +3,8 @@ package com.example.mygame1
 class GameManager(
     var lives: Int = 3,
     var catCol: Int = 1,
-    var score:Int =0
+    var score:Int =0,
+    private val maxCol: Int = 4
 ) {
 
     fun moveLeft() {
@@ -13,7 +14,7 @@ class GameManager(
     }
 
     fun moveRight() {
-        if (catCol < 2) {
+        if (catCol < maxCol) {
             catCol++
         }
     }
@@ -28,8 +29,8 @@ class GameManager(
         return lives <= 0
     }
 
-    fun addScore() {
-        score++
+    fun addScore(points: Int = 1) {
+        score+=points
     }
 }
 

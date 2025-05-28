@@ -1,40 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="24dp"
     android:gravity="center">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/sensors_IMG_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:contentDescription="background" />
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#88BBDEFB"
+        android:padding="16dp"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal">
+
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="24dp">
+        android:layout_marginBottom="16dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Slow"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:shadowColor="#80000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
 
-        <com.google.android.material.materialswitch.MaterialSwitch
+        <Switch
             android:id="@+id/speedSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
             android:textOff=""
             android:textOn=""
-            android:checked="false"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
+            android:checked="false" />
 
         <com.google.android.material.textview.MaterialTextView
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Fast"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:shadowColor="#80000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
     </LinearLayout>
 
     <LinearLayout
@@ -42,16 +70,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="24dp">
+        android:layout_marginBottom="16dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sensor"
             android:textSize="18sp"
-            android:layout_marginEnd="8dp" />
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:shadowColor="#80000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
 
-        <com.google.android.material.materialswitch.MaterialSwitch
+        <Switch
             android:id="@+id/sensorSwitch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,15 +97,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buttons"
+            android:layout_marginStart="8dp"
             android:textSize="18sp"
-            android:layout_marginEnd="8dp" />
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:shadowColor="#80000000"
+            android:shadowDx="1"
+            android:shadowDy="1"
+            android:shadowRadius="2" />
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/startGameButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Start Game" />
+        android:text="START GAME"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:backgroundTint="#8000FF"
+        android:layout_marginTop="8dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_high_scores"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="טבלת שיאים" />
 </LinearLayout>
+    </FrameLayout>
