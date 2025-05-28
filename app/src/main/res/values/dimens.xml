@@ -7,4 +7,5 @@
     <dimen name="heart_margin">10dp</dimen>
     <dimen name="heart_dimens">40dp</dimen>
     <dimen name="status_size">80sp</dimen>
+    <dimen name="default_padding">8sp</dimen>
 </resources>

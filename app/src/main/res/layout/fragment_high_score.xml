@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".ui.theme.HighScoreFragment">
+    android:background="@color/blue"
+    tools:context=".ui.theme.HighScoreFragment"
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Top 10 שחקנים"
+        android:text="Top 10 "
         android:textStyle="bold"
         android:textSize="18sp"
         android:layout_gravity="center_horizontal"
         android:paddingBottom="8dp"/>
+    <LinearLayout
+        android:id="@+id/highscore_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cell_place"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="place"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_LBL_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="score"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/cell_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="date"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:gravity="center" />
+        </LinearLayout>
 
     <!-- טבלת השיאים -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_high_scores"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"
-        android:background="#EEEEEE"
-        android:clipToPadding="false"
-        android:scrollbars="vertical"/>
-
-
-
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_high_scores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"/>
 </LinearLayout>
+
+
+
+
+</FrameLayout >

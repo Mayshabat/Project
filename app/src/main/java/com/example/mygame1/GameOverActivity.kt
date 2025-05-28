@@ -32,17 +32,14 @@ class GameOverActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_over)
 
-
-        val prefs = getSharedPreferences("high_scores", Context.MODE_PRIVATE)
-        prefs.edit().clear().apply()
         score = intent.getIntExtra("SCORE", 0)
-        btnRestart = findViewById(R.id.btn_restart)
+        btnRestart = findViewById(R.id.back_to_home_button)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // טעינת המפה בתחתית המסך
         mapFragment = MapFragment()
         supportFragmentManager.beginTransaction()
-            .replace(R.id.highscore_FRAME_map, mapFragment)
+            .replace(R.id.main_FRAME_map, mapFragment)
             .commit()
 
         // טעינת טבלת שיאים עם callback בעת לחיצה
@@ -54,13 +51,13 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.highscore_FRAME_list, highScoreFragment)
+            .replace(R.id.main_FRAME_list, highScoreFragment)
             .commit()
 
 
-//        if (score != -1) {
-//            saveCurrentLocationAndScore(score)
-//        }
+        if (score != -1) {
+            saveCurrentLocationAndScore(score)
+        }
 
         btnRestart.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
