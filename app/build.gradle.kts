@@ -35,7 +35,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
-        compose = true
+//       compose = true
         viewBinding = true
     }
 }
@@ -43,6 +43,11 @@ android {
 dependencies {
 
     implementation(libs.material)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation ("com.google.android.gms:play-services-maps:18.1.0")
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -61,4 +66,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Glide:
+    implementation(libs.glide)
 }

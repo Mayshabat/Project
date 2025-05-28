@@ -5,4 +5,10 @@
     <string name="heart1_desc">Life 1</string>
     <string name="heart2_desc">Life 2</string>
     <string name="heart3_desc">Life 3</string>
+
+<string name="hello_blank_fragment">Hello blank fragment</string>
+<string name="send">Send</string>
+<string name="please_enter_location">Please Enter Location</string>
+    <string name="high_score_title">המשחקים האחרונים</string>
+    <string name="high_scores_title">טבלת השיאים</string>
 </resources>
