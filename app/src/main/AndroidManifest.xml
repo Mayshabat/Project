@@ -27,7 +27,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD2EGW4ZhOmeDauo4HrhNy2PHaWObhFW-A"/>
+            android:value="AIzaSyBXhyBLqE8HjfwVHx502y8e0qfYZ_FDQmA"/>
 
 
         <activity android:name=".GameOverActivity"

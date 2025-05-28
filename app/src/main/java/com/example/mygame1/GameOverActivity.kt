@@ -36,6 +36,7 @@ class GameOverActivity : AppCompatActivity() {
         btnRestart = findViewById(R.id.back_to_home_button)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
+
         // טעינת המפה בתחתית המסך
         mapFragment = MapFragment()
         supportFragmentManager.beginTransaction()
@@ -68,8 +69,6 @@ class GameOverActivity : AppCompatActivity() {
     }
 
     private fun saveCurrentLocationAndScore(score: Int) {
-
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,
@@ -79,13 +78,12 @@ class GameOverActivity : AppCompatActivity() {
             return
         }
 
-
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
             if (location != null) {
                 saveScoreToPrefs(this, score, location.latitude, location.longitude)
             } else {
                 Toast.makeText(this, "מיקום נוכחי לא זמין", Toast.LENGTH_SHORT).show()
-//                saveScoreToPrefs(this, score, 0.0, 0.0)
+                saveScoreToPrefs(this, score, 0.0, 0.0)
             }
         }
     }
@@ -118,7 +116,6 @@ class GameOverActivity : AppCompatActivity() {
                 emptyList()
             }
         }
-
 
     }
 }

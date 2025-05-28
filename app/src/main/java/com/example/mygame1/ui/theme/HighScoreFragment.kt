@@ -24,9 +24,9 @@ class HighScoreFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_high_score, container, false)
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_high_scores)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         val scores = GameOverActivity.getSavedScores(requireContext())
             .sortedByDescending { it.second }
-
 
         recyclerView.adapter = HighScoreAdapter(scores, object : Callback_HighScoreItemClicked {
             override fun highScoreItemClicked(lat: Double, lon: Double) {
