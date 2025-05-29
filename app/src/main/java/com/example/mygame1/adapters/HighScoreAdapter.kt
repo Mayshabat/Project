@@ -1,5 +1,4 @@
 package com.example.mygame1.adapters
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,39 +6,35 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mygame1.R
 import com.example.mygame1.interfaces.Callback_HighScoreItemClicked
+import com.example.mygame1.utilities.ScoreStorage
+import com.example.mygame1.models.PlayerRecord
 
 class HighScoreAdapter(
-    private val scores: List<Triple<String, Int, Pair<Double, Double>>>,
+    private val records: List<PlayerRecord>,
     private val callback: Callback_HighScoreItemClicked
-) : RecyclerView.Adapter<HighScoreAdapter.HighScoreViewHolder>() {
+) : RecyclerView.Adapter<HighScoreAdapter.RecordHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HighScoreViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_high_score, parent, false)
-        return HighScoreViewHolder(view)
+    class RecordHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val pos: TextView = view.findViewById(R.id.score_item_place)
+        val score: TextView = view.findViewById(R.id.score_item_score)
+        val date: TextView = view.findViewById(R.id.score_item_date)
     }
 
-    override fun getItemCount(): Int = scores.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_high_score, parent, false)
+        return RecordHolder(view)
+    }
 
-    override fun onBindViewHolder(holder: HighScoreViewHolder, position: Int) {
-        val scoreData = scores[position]
-        val date = scoreData.first
-        val score = scoreData.second
-        val lat = scoreData.third.first
-        val lon = scoreData.third.second
-
-        holder.rankText.text = (position + 1).toString()
-        holder.scoreText.text = score.toString()
-        holder.dateText.text = date
-
+    override fun onBindViewHolder(holder: RecordHolder, position: Int) {
+        val item = records[position]
+        holder.pos.text = (position + 1).toString()
+        holder.score.text = item.score.toString()
+        holder.date.text = item.date
         holder.itemView.setOnClickListener {
-            callback.highScoreItemClicked(lat, lon)
+            callback.highScoreItemClicked(item.location.first, item.location.second)
         }
     }
 
-    class HighScoreViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val rankText: TextView = view.findViewById(R.id.score_item_place)
-        val scoreText: TextView = view.findViewById(R.id.score_item_score)
-        val dateText: TextView = view.findViewById(R.id.score_item_date)
-    }
+    override fun getItemCount(): Int = records.size
 }

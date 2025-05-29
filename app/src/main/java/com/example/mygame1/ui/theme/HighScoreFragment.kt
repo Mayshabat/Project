@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mygame1.GameOverActivity
 import com.example.mygame1.R
 import com.example.mygame1.adapters.HighScoreAdapter
 import com.example.mygame1.interfaces.Callback_HighScoreItemClicked
+import com.example.mygame1.utilities.ScoreStorage
 
 class HighScoreFragment : Fragment() {
 
@@ -25,17 +25,14 @@ class HighScoreFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_high_scores)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        val scores = GameOverActivity.getSavedScores(requireContext())
-            .sortedByDescending { it.second } // לפי ניקוד
+        val records = ScoreStorage.getAll(requireContext())
 
-
-        recyclerView.adapter = HighScoreAdapter(scores, object : Callback_HighScoreItemClicked {
+        recyclerView.adapter = HighScoreAdapter(records, object : Callback_HighScoreItemClicked {
             override fun highScoreItemClicked(lat: Double, lon: Double) {
                 highScoreItemClicked?.highScoreItemClicked(lat, lon)
             }
         })
+
         return view
     }
 }
-
-
