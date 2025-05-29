@@ -14,7 +14,8 @@ class HighScoreAdapter(
 ) : RecyclerView.Adapter<HighScoreAdapter.HighScoreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HighScoreViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_high_score, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_high_score, parent, false)
         return HighScoreViewHolder(view)
     }
 
@@ -22,12 +23,14 @@ class HighScoreAdapter(
 
     override fun onBindViewHolder(holder: HighScoreViewHolder, position: Int) {
         val scoreData = scores[position]
+        val date = scoreData.first
         val score = scoreData.second
         val lat = scoreData.third.first
         val lon = scoreData.third.second
 
-        holder.rankText.text = "#${position + 1}"
+        holder.rankText.text = (position + 1).toString()
         holder.scoreText.text = score.toString()
+        holder.dateText.text = date
 
         holder.itemView.setOnClickListener {
             callback.highScoreItemClicked(lat, lon)
@@ -37,5 +40,6 @@ class HighScoreAdapter(
     class HighScoreViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val rankText: TextView = view.findViewById(R.id.score_item_place)
         val scoreText: TextView = view.findViewById(R.id.score_item_score)
+        val dateText: TextView = view.findViewById(R.id.score_item_date)
     }
 }

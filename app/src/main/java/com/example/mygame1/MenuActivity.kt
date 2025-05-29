@@ -37,6 +37,7 @@ class MenuActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
     private fun initViews() {
 
         ImageLoader.loadImage(

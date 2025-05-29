@@ -1,9 +1,9 @@
-
 package com.example.mygame1
-import android.util.Log
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.widget.Button
@@ -17,8 +17,8 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import android.Manifest
-import android.content.pm.PackageManager
+import java.text.SimpleDateFormat
+import java.util.*
 
 class GameOverActivity : AppCompatActivity() {
 
@@ -26,7 +26,6 @@ class GameOverActivity : AppCompatActivity() {
     private lateinit var mapFragment: MapFragment
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var score: Int = 0
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +35,13 @@ class GameOverActivity : AppCompatActivity() {
         btnRestart = findViewById(R.id.back_to_home_button)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-
-        // טעינת המפה בתחתית המסך
+        // טען מפה
         mapFragment = MapFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_FRAME_map, mapFragment)
             .commit()
 
-        // טעינת טבלת שיאים עם callback בעת לחיצה
+        // טען טבלת שיאים
         val highScoreFragment = HighScoreFragment()
         highScoreFragment.highScoreItemClicked = object : Callback_HighScoreItemClicked {
             override fun highScoreItemClicked(lat: Double, lon: Double) {
@@ -55,7 +53,6 @@ class GameOverActivity : AppCompatActivity() {
             .replace(R.id.main_FRAME_list, highScoreFragment)
             .commit()
 
-
         if (score != -1) {
             saveCurrentLocationAndScore(score)
         }
@@ -65,7 +62,6 @@ class GameOverActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        saveCurrentLocationAndScore(score)
     }
 
     private fun saveCurrentLocationAndScore(score: Int) {
@@ -79,25 +75,21 @@ class GameOverActivity : AppCompatActivity() {
         }
 
         fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            if (location != null) {
-                saveScoreToPrefs(this, score, location.latitude, location.longitude)
-            } else {
-                Toast.makeText(this, "מיקום נוכחי לא זמין", Toast.LENGTH_SHORT).show()
-                saveScoreToPrefs(this, score, 0.0, 0.0)
-            }
+            val lat = location?.latitude ?: 0.0
+            val lon = location?.longitude ?: 0.0
+            val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+            saveScoreToPrefs(this, date, score, lat, lon)
         }
     }
 
+
     companion object {
-        fun saveScoreToPrefs(context: Context, score: Int, lat: Double, lon: Double) {
+        fun saveScoreToPrefs(context: Context, date: String, score: Int, lat: Double, lon: Double) {
             val prefs = context.getSharedPreferences("high_scores", Context.MODE_PRIVATE)
             val list = getSavedScores(context).toMutableList()
 
-
-
-            list.add(Triple("", score, Pair(lat, lon)))
-
-
+            list.add(Triple(date, score, Pair(lat, lon)))
 
             val sortedList = list.sortedByDescending { it.second }.take(10)
             val json = Gson().toJson(sortedList)
@@ -107,7 +99,6 @@ class GameOverActivity : AppCompatActivity() {
         fun getSavedScores(context: Context): List<Triple<String, Int, Pair<Double, Double>>> {
             val prefs = context.getSharedPreferences("high_scores", Context.MODE_PRIVATE)
             val json = prefs.getString("score_list", "[]")
-
             return try {
                 val type = object : TypeToken<List<Triple<String, Int, Pair<Double, Double>>>>() {}.type
                 Gson().fromJson(json, type)
@@ -116,6 +107,5 @@ class GameOverActivity : AppCompatActivity() {
                 emptyList()
             }
         }
-
     }
 }

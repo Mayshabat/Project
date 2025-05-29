@@ -201,6 +201,9 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         intent.putExtra("SCORE", gameManager.score)
         startActivity(intent)
         finish()
+
+
+
     }
 
     private fun updateCatPosition() {

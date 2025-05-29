@@ -1,4 +1,3 @@
-
 package com.example.mygame1.ui.theme
 
 import android.os.Bundle
@@ -20,13 +19,15 @@ class HighScoreFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_high_score, container, false)
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_high_scores)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         val scores = GameOverActivity.getSavedScores(requireContext())
-            .sortedByDescending { it.second }
+            .sortedByDescending { it.second } // לפי ניקוד
+
 
         recyclerView.adapter = HighScoreAdapter(scores, object : Callback_HighScoreItemClicked {
             override fun highScoreItemClicked(lat: Double, lon: Double) {
@@ -36,3 +37,5 @@ class HighScoreFragment : Fragment() {
         return view
     }
 }
+
+
