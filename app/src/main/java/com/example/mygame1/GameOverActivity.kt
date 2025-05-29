@@ -77,6 +77,17 @@ class GameOverActivity : AppCompatActivity() {
             val date = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
             val record = PlayerRecord(date, score, Pair(lat, lon))
             ScoreStorage.save(this, record)
-        }
-    }
+
+            // רק אחרי ששמרת — טען את הפרגמנט
+            val highScoreFragment = HighScoreFragment()
+            highScoreFragment.highScoreItemClicked = object : Callback_HighScoreItemClicked {
+                override fun highScoreItemClicked(lat: Double, lon: Double) {
+                    mapFragment.showMarkerAtLocation(lat, lon)
+                }
+            }
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_FRAME_list, highScoreFragment)
+                .commit()
+        }}
 }
