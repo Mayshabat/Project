@@ -13,38 +13,47 @@ import android.widget.GridLayout
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
-import com.example.mygame1.utilities.SignalManager
-import com.google.android.material.textview.MaterialTextView
+import com.bumptech.glide.Glide
 import com.example.mygame1.utilities.ImageLoader
+import com.example.mygame1.utilities.SignalManager
 import com.example.mygame1.utilities.SingleSoundPlayer
 import com.example.mygame1.utilities.BackgroundMusicPlayer
-import com.bumptech.glide.Glide
+import com.google.android.material.textview.MaterialTextView
 
-// MainActivity.kt
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var gameBoard: GridLayout
     private lateinit var cats: Array<ImageView>
     private lateinit var hearts: Array<ImageView>
 
-    data class Cell(val fish: ImageView, val bomb: ImageView)
     private lateinit var matrix: Array<Array<Cell>>
     private lateinit var sensorManager: SensorManager
     private var accelerometer: Sensor? = null
+
     private lateinit var main_LBL_score: MaterialTextView
+    private lateinit var sensors_IMG_background: AppCompatImageView
 
     private val handler = Handler(Looper.getMainLooper())
     private val gameManager = GameManager()
     private var isRunning = true
 
-    private lateinit var sensors_IMG_background: AppCompatImageView
+    private var bonusHandler = Handler(Looper.getMainLooper())
+    private var bonusRunnable: Runnable? = null
+
+    data class Cell(val fish: ImageView, val bomb: ImageView)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // מוזיקה
         BackgroundMusicPlayer.init(this).setResourceId(R.raw.background_music)
+
+        // חיישנים
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+        // אתחול תצוגות
         main_LBL_score = findViewById(R.id.main_LBL_score)
         sensors_IMG_background = findViewById(R.id.sensors_IMG_background)
         gameBoard = findViewById(R.id.game_board)
@@ -63,6 +72,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             findViewById(R.id.heart3)
         )
 
+        // אתחול תנועת החתול
         for (cat in cats) cat.visibility = View.INVISIBLE
         updateCatPosition()
 
@@ -79,9 +89,11 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             findViewById<View>(R.id.buttonLeft).visibility = View.INVISIBLE
             findViewById<View>(R.id.buttonRight).visibility = View.INVISIBLE
         }
+
         initViews()
         setupMatrix()
         startGameLoop()
+        startBonusTimer()
     }
 
     private fun initViews() {
@@ -97,13 +109,10 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             Array(9) { row ->
                 val fishId = resources.getIdentifier("fish_${col}_${row}", "id", packageName)
                 val bombId = resources.getIdentifier("bomb_${col}_${row}", "id", packageName)
-
                 val fishView = findViewById<ImageView>(fishId)
                 val bombView = findViewById<ImageView>(bombId)
-
                 fishView.visibility = View.INVISIBLE
                 bombView.visibility = View.INVISIBLE
-
                 Cell(fishView, bombView)
             }
         }
@@ -150,11 +159,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                             handleScore()
                         }
                     } else {
-                        if (isBomb) {
-                            cell.bomb.visibility = View.VISIBLE
-                        } else {
-                            cell.fish.visibility = View.VISIBLE
-                        }
+                        if (isBomb) cell.bomb.visibility = View.VISIBLE
+                        else cell.fish.visibility = View.VISIBLE
                     }
 
                     dropHandler.postDelayed({
@@ -165,11 +171,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
                     return
                 }
 
-                if (isBomb) {
-                    cell.bomb.visibility = View.VISIBLE
-                } else {
-                    cell.fish.visibility = View.VISIBLE
-                }
+                if (isBomb) cell.bomb.visibility = View.VISIBLE
+                else cell.fish.visibility = View.VISIBLE
 
                 row++
                 dropHandler.postDelayed(this, 300)
@@ -187,6 +190,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
         updateHearts()
         if (gameManager.isGameOver()) goToGameOverScreen()
+
+        startBonusTimer()
     }
 
     private fun handleScore() {
@@ -195,15 +200,23 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         SignalManager.toast(this, "יאמי!")
     }
 
+    private fun startBonusTimer() {
+        bonusRunnable?.let { bonusHandler.removeCallbacks(it) }
+        bonusRunnable = Runnable {
+            gameManager.addScore(5)
+            main_LBL_score.text = gameManager.score.toString()
+            SignalManager.toast(this, "בונוס זמן! +5 נקודות")
+        }
+        bonusHandler.postDelayed(bonusRunnable!!, 10_000L)
+    }
+
     private fun goToGameOverScreen() {
         isRunning = false
+        bonusRunnable?.let { bonusHandler.removeCallbacks(it) }
         val intent = Intent(this, GameOverActivity::class.java)
         intent.putExtra("SCORE", gameManager.score)
         startActivity(intent)
         finish()
-
-
-
     }
 
     private fun updateCatPosition() {

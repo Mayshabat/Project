@@ -121,6 +121,6 @@
             android:id="@+id/btn_high_scores"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="טבלת שיאים" />
+            android:text="Records" />
 </LinearLayout>
     </FrameLayout>

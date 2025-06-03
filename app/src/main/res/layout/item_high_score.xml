@@ -23,6 +23,7 @@
         android:textSize="16sp"
         android:text="100" />
 
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/score_item_date"
         android:layout_width="0dp"
@@ -33,4 +34,9 @@
         android:text="01/01/2024" />
 
 </LinearLayout>
+
+
+
+
+
 

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,20 +6,20 @@
     tools:context=".ui.theme.HighScoreFragment"
     android:padding="16dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Top 10 "
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_gravity="center_horizontal"
-        android:paddingBottom="8dp"/>
     <LinearLayout
-        android:id="@+id/highscore_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Top 10"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="8dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,47 +27,37 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/cell_place"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="place"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/item_LBL_score"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="score"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/cell_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="date"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:gravity="center" />
+                android:gravity="center"/>
         </LinearLayout>
 
-    <!-- טבלת השיאים -->
+        <!-- כאן יש שינוי חשוב: קובעים גובה לרשימה -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_high_scores"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="300dp"
             android:layout_weight="1"
-            android:clipToPadding="false"
             android:scrollbars="vertical"/>
-</LinearLayout>
+    </LinearLayout>
 
-
-
-
-</FrameLayout >
+</FrameLayout>
