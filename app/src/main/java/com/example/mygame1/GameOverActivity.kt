@@ -92,6 +92,9 @@ private fun getCurrentLocationAndSave(score: Int) {
 
             val record = PlayerRecord(date, score, Pair(lat, lon))
             ScoreStorage.save(this@GameOverActivity, record)
+
+
+            loadHighScoreFragment()
         }
     }
 
